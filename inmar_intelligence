@@ -14,9 +14,9 @@ a. Insert several records into the employees table:
 
 INSERT INTO employees (name, department, salary, hire_date)
 VALUES
-    ('John Doe', 'IT', 60000.00, '2020-05-01'),
-    ('Jane Smith', 'HR', 55000.00, '2021-07-15'),
-    ('Mike Johnson', 'Finance', 75000.00, '2019-03-20');
+    ('siva balan', 'IT', 60000.00, '2020-05-01'),
+    ('sanjay mike', 'HR', 55000.00, '2021-07-15'),
+    ('soumdarya vijay', 'Finance', 75000.00, '2019-03-20');
 
 b. Retrieve all employees in a specific department:
 
