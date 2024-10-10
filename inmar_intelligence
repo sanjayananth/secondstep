@@ -1,0 +1,132 @@
+1. DDL Statement to Create the employees Table:
+
+CREATE TABLE employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    department VARCHAR(255),
+    salary DECIMAL(10, 2),
+    hire_date DATE
+);
+
+
+2. SQL Queries for Operations:
+a. Insert several records into the employees table:
+
+INSERT INTO employees (name, department, salary, hire_date)
+VALUES
+    ('John Doe', 'IT', 60000.00, '2020-05-01'),
+    ('Jane Smith', 'HR', 55000.00, '2021-07-15'),
+    ('Mike Johnson', 'Finance', 75000.00, '2019-03-20');
+
+b. Retrieve all employees in a specific department:
+
+SELECT * FROM employees
+WHERE department = 'IT';
+
+c. Update the salary of a specific employee:
+
+UPDATE employees
+SET salary = 70000.00
+WHERE id = 1;
+
+d. Delete an employee record by ID:
+
+DELETE FROM employees
+WHERE id = 2;
+
+e. Retrieve the average salary of employees in each department:
+
+SELECT department, AVG(salary) AS average_salary
+FROM employees
+GROUP BY department;
+
+f. Retrieve a list of all employees along with their department names from the employees and departments tables:
+
+CREATE TABLE departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(255)
+);
+
+
+SELECT e.name, e.department, d.department_name
+FROM employees e
+LEFT JOIN departments d ON e.department = d.department_name;
+
+--------------------------------------------------------------------------------------------------------------------------------
+Question #2) Implement a Simple To-Do List Manager using Python
+ Requirements:
+
+1. Create a class ToDoList that supports the following operations:
+
+class ToDoList:
+    def __init__(self):
+        self.tasks = {}
+        
+    def add_task(self, task: str):
+        """Add a new task to the list."""
+        if task in self.tasks:
+            raise ValueError(f"Task '{task}' already exists.")
+        self.tasks[task] = False  # False indicates the task is not completed
+    
+    def remove_task(self, task: str):
+        """Remove a task from the list."""
+        if task not in self.tasks:
+            raise ValueError(f"Task '{task}' does not exist.")
+        del self.tasks[task]
+    
+    def get_tasks(self):
+        """Return a list of all tasks with their completion status."""
+        return self.tasks
+    
+    def complete_task(self, task: str):
+        """Mark a task as completed."""
+        if task not in self.tasks:
+            raise ValueError(f"Task '{task}' does not exist.")
+        self.tasks[task] = True  # Mark the task as completed
+
+
+---------------------------------------------------------------------------------------------------------
+ 3. Write unit tests to verify the functionality of your implementation.
+ 
+import unittest
+
+class TestToDoList(unittest.TestCase):
+    
+    def setUp(self):
+        self.todo = ToDoList()
+
+    def test_add_task(self):
+        self.todo.add_task("Task 1")
+        self.assertIn("Task 1", self.todo.get_tasks())
+    
+    def test_add_task_existing(self):
+        self.todo.add_task("Task 1")
+        with self.assertRaises(ValueError):
+            self.todo.add_task("Task 1")
+    
+    def test_remove_task(self):
+        self.todo.add_task("Task 1")
+        self.todo.remove_task("Task 1")
+        self.assertNotIn("Task 1", self.todo.get_tasks())
+
+    def test_remove_task_nonexistent(self):
+        with self.assertRaises(ValueError):
+            self.todo.remove_task("Nonexistent Task")
+
+    def test_complete_task(self):
+        self.todo.add_task("Task 1")
+        self.todo.complete_task("Task 1")
+        self.assertTrue(self.todo.get_tasks()["Task 1"])
+    
+    def test_complete_task_nonexistent(self):
+        with self.assertRaises(ValueError):
+            self.todo.complete_task("Nonexistent Task")
+    
+    def test_get_tasks(self):
+        self.todo.add_task("Task 1")
+        self.todo.add_task("Task 2")
+        self.assertEqual(len(self.todo.get_tasks()), 2)
+
+if __name__ == '__main__':
+    unittest.main()
+
